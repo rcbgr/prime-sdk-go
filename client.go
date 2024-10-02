@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/coinbase-samples/core-go"
@@ -81,5 +82,12 @@ func AddPrimeHeaders(req *http.Request, path string, body []byte, client core.Cl
 func sign(method, path, timestamp, signingKey, body string) string {
 	h := hmac.New(sha256.New, []byte(signingKey))
 	h.Write([]byte(fmt.Sprintf("%s%s%s%s", timestamp, method, path, body)))
+	return base64.StdEncoding.EncodeToString(h.Sum(nil))
+}
+
+func signWebSocket(channel, portfolioId, svcAccountId, timestamp, key, signingKey string, productIds []string) string {
+	h := hmac.New(sha256.New, []byte(signingKey))
+	message := fmt.Sprintf("%s%s%s%s%s%s", channel, key, svcAccountId, timestamp, portfolioId, strings.Join(productIds, ""))
+	h.Write([]byte(message))
 	return base64.StdEncoding.EncodeToString(h.Sum(nil))
 }
