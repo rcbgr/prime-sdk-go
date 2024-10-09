@@ -38,13 +38,64 @@ type WebSocketUnsubscribeMessage struct {
 	Channels []string `json:"channels"`
 }
 
-type HeartbeatMessage struct {
-	Channel     string `json:"channel"`
-	Timestamp   string `json:"timestamp"`
-	SequenceNum int    `json:"sequence_num"`
+type WebSocketHeartbeatMessage struct {
+	Channel     string                     `json:"channel"`
+	Timestamp   string                     `json:"timestamp"`
+	SequenceNum int                        `json:"sequence_num"`
+	Events      []*WebSocketHeartbeatEvent `json:"events"`
 }
 
-func SubscriptionMsg(credentials *Credentials, channel string, productIds []string) ([]byte, error) {
+type WebSocketHeartbeatEvent struct {
+	Subscriptions *WebSocketHeartbeatEventSubscriptions `json:"subscriptions"`
+}
+
+type WebSocketHeartbeatEventSubscriptions struct {
+	Heartbeats []string `json:"heartbeats"`
+}
+
+type WebSocketOrdersMessage struct {
+	Channel     string                  `json:"channel"`
+	Timestamp   string                  `json:"timestamp"`
+	SequenceNum int                     `json:"sequence_num"`
+	Events      []*WebSocketOrdersEvent `json:"events"`
+}
+
+type WebSocketOrdersEvent struct {
+	Type   string            `json:"type"`
+	Orders []*WebSocketOrder `json:"orders"`
+}
+
+type WebSocketOrder struct {
+	OrderId            string `json:"order_id"`
+	ClientOrderId      string `json:"client_order_id"`
+	CumulativeQuantity string `json:"cum_qty"`
+	LeavesQuantity     string `json:"leaves_qty"`
+	AveragePrice       string `json:"avg_px"`
+	Fees               string `json:"fees"`
+	Status             string `json:"status"`
+}
+
+type WebSocketL2DataMessage struct {
+	Channel     string                  `json:"channel"`
+	Timestamp   string                  `json:"timestamp"`
+	SequenceNum int                     `json:"sequence_num"`
+	Events      []*WebSocketL2DataEvent `json:"events"`
+}
+
+type WebSocketL2DataEvent struct {
+	Type      string                   `json:"type"`
+	ProductId string                   `json:"product_id"`
+	Updates   []*WebSocketL2DataUpdate `json:"updates"`
+}
+
+type WebSocketL2DataUpdate struct {
+	Side      string `json:"side"`
+	EventTime string `json:"event_time"`
+	Price     string `json:"px"`
+	Quantity  string `json:"qty"`
+}
+
+func subscriptionMsg(credentials *Credentials, channel string, productIds []string) ([]byte, error) {
 	t := time.Now().UTC().Format(time.RFC3339)
 
 	msg := &WebSocketSubscribeMessage{
@@ -79,14 +130,14 @@ func SubscriptionMsg(credentials *Credentials, channel string, productIds []stri
 
 }
 
-func HeartbeatSubscriptionMsg(credentials *Credentials) ([]byte, error) {
-	return SubscriptionMsg(credentials, "heartbeats", nil)
+func heartbeatSubscriptionMsg(credentials *Credentials) ([]byte, error) {
+	return subscriptionMsg(credentials, "heartbeats", nil)
 }
 
-func OrderSubscriptionMsg(credentials *Credentials, productIds []string) ([]byte, error) {
-	return SubscriptionMsg(credentials, "orders", productIds)
+func orderSubscriptionMsg(credentials *Credentials, productIds []string) ([]byte, error) {
+	return subscriptionMsg(credentials, "orders", productIds)
 }
 
-func L2OrderDataSubscriptionMsg(credentials *Credentials, productIds []string) ([]byte, error) {
-	return SubscriptionMsg(credentials, "l2_data", productIds)
+func l2OrderDataSubscriptionMsg(credentials *Credentials, productIds []string) ([]byte, error) {
+	return subscriptionMsg(credentials, "l2_data", productIds)
 }
