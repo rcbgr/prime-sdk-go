@@ -32,6 +32,8 @@ import (
 
 var defaultV1ApiBaseUrl = "https://api.prime.coinbase.com/v1"
 
+var defaultWebSocketUrl = "wss://ws-feed.prime.coinbase.com"
+
 var defaultHeadersFunc = AddPrimeHeaders
 
 var successStatusCodes = []int{http.StatusOK}
@@ -164,11 +166,11 @@ type Client interface {
 }
 
 type ClientImpl struct {
-	httpClient       http.Client
-	httpBaseUrl      string
-	webSocketBaseUrl string
-	headersFunc      core.HttpHeaderFunc
-	credentials      *Credentials
+	httpClient   http.Client
+	httpBaseUrl  string
+	webSocketUrl string
+	headersFunc  core.HttpHeaderFunc
+	credentials  *Credentials
 }
 
 func (c *ClientImpl) HttpBaseUrl() string {
@@ -181,11 +183,11 @@ func (c *ClientImpl) SetBaseUrl(u string) Client {
 }
 
 func (c *ClientImpl) WebSocketUrl() string {
-	return c.webSocketBaseUrl
+	return c.webSocketUrl
 }
 
 func (c *ClientImpl) SetWebSocketUrl(u string) Client {
-	c.webSocketBaseUrl = u
+	c.webSocketUrl = u
 	return c
 }
 
@@ -204,10 +206,11 @@ func (c *ClientImpl) SetHeadersFunc(hf core.HttpHeaderFunc) Client {
 
 func NewClient(credentials *Credentials, httpClient http.Client) Client {
 	return &ClientImpl{
-		httpBaseUrl: defaultV1ApiBaseUrl,
-		credentials: credentials,
-		httpClient:  httpClient,
-		headersFunc: defaultHeadersFunc,
+		httpBaseUrl:  defaultV1ApiBaseUrl,
+		webSocketUrl: defaultWebSocketUrl,
+		credentials:  credentials,
+		httpClient:   httpClient,
+		headersFunc:  defaultHeadersFunc,
 	}
 }
 
