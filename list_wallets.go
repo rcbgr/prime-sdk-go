@@ -47,17 +47,17 @@ func (c *ClientImpl) ListWallets(
 
 	path := fmt.Sprintf("/portfolios/%s/wallets", request.PortfolioId)
 
-	queryParams := appendQueryParam(core.EmptyQueryParams, "type", request.Type)
+	queryParams := core.AppendHttpQueryParam(core.EmptyQueryParams, "type", request.Type)
 
 	for _, v := range request.Symbols {
-		queryParams = appendQueryParam(queryParams, "symbols", v)
+		queryParams = core.AppendHttpQueryParam(queryParams, "symbols", v)
 	}
 
 	queryParams = appendPaginationParams(queryParams, request.Pagination)
 
 	response := &ListWalletsResponse{Request: request}
 
-	if err := core.Get(ctx, c, path, queryParams, request, response, c.headersFunc); err != nil {
+	if err := core.HttpGet(ctx, c, path, queryParams, successStatusCodes, request, response, c.headersFunc); err != nil {
 		return nil, err
 	}
 

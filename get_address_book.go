@@ -45,18 +45,18 @@ func (c *ClientImpl) GetAddressBook(
 
 	var queryParams string
 	if len(request.Symbol) > 0 {
-		queryParams = appendQueryParam(queryParams, "currency_symbol", request.Symbol)
+		queryParams = core.AppendHttpQueryParam(queryParams, "currency_symbol", request.Symbol)
 	}
 
 	if len(request.Search) > 0 {
-		queryParams = appendQueryParam(queryParams, "search", request.Search)
+		queryParams = core.AppendHttpQueryParam(queryParams, "search", request.Search)
 	}
 
 	queryParams = appendPaginationParams(queryParams, request.Pagination)
 
 	response := &GetAddressBookResponse{Request: request}
 
-	if err := core.Get(ctx, c, path, queryParams, request, response, c.headersFunc); err != nil {
+	if err := core.HttpGet(ctx, c, path, queryParams, successStatusCodes, request, response, c.headersFunc); err != nil {
 		return nil, err
 	}
 

@@ -49,26 +49,26 @@ func (c *ClientImpl) ListPortfolioTransactions(
 	var queryParams string
 
 	if len(request.Symbols) > 0 {
-		queryParams = appendQueryParam(queryParams, "symbols", request.Symbols)
+		queryParams = core.AppendHttpQueryParam(queryParams, "symbols", request.Symbols)
 	}
 
 	for _, ty := range request.Types {
-		queryParams = appendQueryParam(queryParams, "types", ty)
+		queryParams = core.AppendHttpQueryParam(queryParams, "types", ty)
 	}
 
 	if !request.Start.IsZero() {
-		queryParams = appendQueryParam(queryParams, "start_time", TimeToStr(request.Start))
+		queryParams = core.AppendHttpQueryParam(queryParams, "start_time", TimeToStr(request.Start))
 	}
 
 	if !request.End.IsZero() {
-		queryParams = appendQueryParam(queryParams, "end_time", TimeToStr(request.End))
+		queryParams = core.AppendHttpQueryParam(queryParams, "end_time", TimeToStr(request.End))
 	}
 
 	queryParams = appendPaginationParams(queryParams, request.Pagination)
 
 	response := &ListPortfolioTransactionsResponse{Request: request}
 
-	if err := core.Get(ctx, c, path, queryParams, request, response, c.headersFunc); err != nil {
+	if err := core.HttpGet(ctx, c, path, queryParams, successStatusCodes, request, response, c.headersFunc); err != nil {
 		return nil, err
 	}
 

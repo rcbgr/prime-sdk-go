@@ -49,30 +49,30 @@ func (c *ClientImpl) ListActivities(
 
 	var queryParams string
 	if !request.Start.IsZero() {
-		queryParams = appendQueryParam(queryParams, "start_time", TimeToStr(request.Start))
+		queryParams = core.AppendHttpQueryParam(queryParams, "start_time", TimeToStr(request.Start))
 	}
 
 	if !request.End.IsZero() {
-		queryParams = appendQueryParam(queryParams, "end_time", TimeToStr(request.End))
+		queryParams = core.AppendHttpQueryParam(queryParams, "end_time", TimeToStr(request.End))
 	}
 
 	for _, v := range request.Symbols {
-		queryParams = appendQueryParam(queryParams, "symbols", v)
+		queryParams = core.AppendHttpQueryParam(queryParams, "symbols", v)
 	}
 
 	for _, v := range request.Categories {
-		queryParams = appendQueryParam(queryParams, "categories", v)
+		queryParams = core.AppendHttpQueryParam(queryParams, "categories", v)
 	}
 
 	for _, v := range request.Statuses {
-		queryParams = appendQueryParam(queryParams, "statuses", v)
+		queryParams = core.AppendHttpQueryParam(queryParams, "statuses", v)
 	}
 
 	queryParams = appendPaginationParams(queryParams, request.Pagination)
 
 	response := &ListActivitiesResponse{Request: request}
 
-	if err := core.Get(ctx, c, path, queryParams, request, response, c.headersFunc); err != nil {
+	if err := core.HttpGet(ctx, c, path, queryParams, successStatusCodes, request, response, c.headersFunc); err != nil {
 		return nil, err
 	}
 

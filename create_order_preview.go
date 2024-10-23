@@ -44,7 +44,7 @@ func (c *ClientImpl) CreateOrderPreview(
 
 	responseOrder := &Order{}
 
-	if err := core.Post(ctx, c, path, core.EmptyQueryParams, request.Order, responseOrder, c.headersFunc); err != nil {
+	if err := core.HttpPost(ctx, c, path, core.EmptyQueryParams, successStatusCodes, request.Order, responseOrder, c.headersFunc); err != nil {
 		return nil, err
 	}
 

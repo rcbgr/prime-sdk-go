@@ -42,11 +42,11 @@ func (c *ClientImpl) GetWalletDepositInstructions(
 
 	path := fmt.Sprintf("/portfolios/%s/wallets/%s/deposit_instructions", request.PortfolioId, request.Id)
 
-	queryParams := appendQueryParam(core.EmptyQueryParams, "deposit_type", request.Type)
+	queryParams := core.AppendHttpQueryParam(core.EmptyQueryParams, "deposit_type", request.Type)
 
 	response := &GetWalletDepositInstructionsResponse{Request: request}
 
-	if err := core.Get(ctx, c, path, queryParams, request, response, c.headersFunc); err != nil {
+	if err := core.HttpGet(ctx, c, path, queryParams, successStatusCodes, request, response, c.headersFunc); err != nil {
 		return nil, err
 	}
 

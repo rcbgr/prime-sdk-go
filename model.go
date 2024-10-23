@@ -20,6 +20,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/coinbase-samples/core-go"
 	"github.com/shopspring/decimal"
 )
 
@@ -84,7 +85,7 @@ type Balance struct {
 }
 
 func (b Balance) AmountNum() (amount decimal.Decimal, err error) {
-	amount, err = strToNum(b.Amount)
+	amount, err = core.StrToNum(b.Amount)
 	if err != nil {
 		err = fmt.Errorf("Invalid asset amount: %s - symbol: %s - msg: %v", b.Amount, b.Symbol, err)
 	}
@@ -92,7 +93,7 @@ func (b Balance) AmountNum() (amount decimal.Decimal, err error) {
 }
 
 func (b Balance) HoldsNum() (holds decimal.Decimal, err error) {
-	holds, err = strToNum(b.Holds)
+	holds, err = core.StrToNum(b.Holds)
 	if err != nil {
 		err = fmt.Errorf("Invalid asset holds: %s - symbol: %s - msg: %v", b.Holds, b.Symbol, err)
 	}
@@ -176,7 +177,7 @@ type Commission struct {
 }
 
 func (p Commission) RateNum() (rate decimal.Decimal, err error) {
-	rate, err = strToNum(p.Rate)
+	rate, err = core.StrToNum(p.Rate)
 	if err != nil {
 		err = fmt.Errorf("Invalid commission rate: %s - err: %w", p.Rate, err)
 	}
@@ -195,7 +196,7 @@ type Product struct {
 }
 
 func (p Product) BaseMinSizeNum() (amount decimal.Decimal, err error) {
-	amount, err = strToNum(p.BaseMinSize)
+	amount, err = core.StrToNum(p.BaseMinSize)
 	if err != nil {
 		err = fmt.Errorf("invalid base min: %s - id: %s - err: %w", p.BaseMinSize, p.Id, err)
 	}
@@ -203,7 +204,7 @@ func (p Product) BaseMinSizeNum() (amount decimal.Decimal, err error) {
 }
 
 func (p Product) BaseMaxSizeNum() (amount decimal.Decimal, err error) {
-	amount, err = strToNum(p.BaseMaxSize)
+	amount, err = core.StrToNum(p.BaseMaxSize)
 	if err != nil {
 		err = fmt.Errorf("invalid base max: %s - id: %s - err: %v", p.BaseMaxSize, p.Id, err)
 	}
@@ -211,7 +212,7 @@ func (p Product) BaseMaxSizeNum() (amount decimal.Decimal, err error) {
 }
 
 func (p Product) BaseIncrementNum() (amount decimal.Decimal, err error) {
-	amount, err = strToNum(p.BaseIncrement)
+	amount, err = core.StrToNum(p.BaseIncrement)
 	if err != nil {
 		err = fmt.Errorf("invalid base increment: %s - id: %s - msg: %w", p.BaseIncrement, p.Id, err)
 	}
@@ -219,7 +220,7 @@ func (p Product) BaseIncrementNum() (amount decimal.Decimal, err error) {
 }
 
 func (p Product) QuoteMinSizeNum() (amount decimal.Decimal, err error) {
-	amount, err = strToNum(p.QuoteMinSize)
+	amount, err = core.StrToNum(p.QuoteMinSize)
 	if err != nil {
 		err = fmt.Errorf("invalid quote min: %s - id: %s - err: %w", p.QuoteMinSize, p.Id, err)
 	}
@@ -227,7 +228,7 @@ func (p Product) QuoteMinSizeNum() (amount decimal.Decimal, err error) {
 }
 
 func (p Product) QuoteMaxSizeNum() (amount decimal.Decimal, err error) {
-	amount, err = strToNum(p.QuoteMaxSize)
+	amount, err = core.StrToNum(p.QuoteMaxSize)
 	if err != nil {
 		err = fmt.Errorf("invalid quote max: %s - id: %s - err: %v", p.QuoteMaxSize, p.Id, err)
 	}
@@ -235,7 +236,7 @@ func (p Product) QuoteMaxSizeNum() (amount decimal.Decimal, err error) {
 }
 
 func (p Product) QuoteIncrementNum() (amount decimal.Decimal, err error) {
-	amount, err = strToNum(p.QuoteIncrement)
+	amount, err = core.StrToNum(p.QuoteIncrement)
 	if err != nil {
 		err = fmt.Errorf("invalid quote increment: %s - id: %s - msg: %w", p.QuoteIncrement, p.Id, err)
 	}
@@ -336,7 +337,7 @@ type Transfer struct {
 }
 
 func (tr Transfer) ValueNum() (amount decimal.Decimal, err error) {
-	amount, err = strToNum(tr.Value)
+	amount, err = core.StrToNum(tr.Value)
 	if err != nil {
 		err = fmt.Errorf("invalid transfer value: %s - type: %s - msg: %v", tr.Value, tr.Type, err)
 	}

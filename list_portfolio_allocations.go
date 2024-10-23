@@ -48,24 +48,24 @@ func (c *ClientImpl) ListPortfolioAllocations(
 	queryParams := appendPaginationParams(core.EmptyQueryParams, request.Pagination)
 
 	if !request.Start.IsZero() {
-		queryParams = appendQueryParam(queryParams, "start_date", TimeToStr(request.Start))
+		queryParams = core.AppendHttpQueryParam(queryParams, "start_date", TimeToStr(request.Start))
 	}
 
 	if !request.End.IsZero() {
-		queryParams = appendQueryParam(queryParams, "end_datae", TimeToStr(request.End))
+		queryParams = core.AppendHttpQueryParam(queryParams, "end_datae", TimeToStr(request.End))
 	}
 
 	if len(request.Side) > 0 {
-		queryParams = appendQueryParam(queryParams, "side", request.Side)
+		queryParams = core.AppendHttpQueryParam(queryParams, "side", request.Side)
 	}
 
 	for _, v := range request.ProductIds {
-		queryParams = appendQueryParam(queryParams, "product_ids", v)
+		queryParams = core.AppendHttpQueryParam(queryParams, "product_ids", v)
 	}
 
 	response := &ListPortfolioAllocationsResponse{Request: request}
 
-	if err := core.Get(ctx, c, path, queryParams, request, response, c.headersFunc); err != nil {
+	if err := core.HttpGet(ctx, c, path, queryParams, successStatusCodes, request, response, c.headersFunc); err != nil {
 		return nil, err
 	}
 

@@ -43,7 +43,7 @@ func (c *ClientImpl) CreateOrder(ctx context.Context, request *CreateOrderReques
 
 	response := &CreateOrderResponse{Request: request}
 
-	if err := core.Post(ctx, c, path, core.EmptyQueryParams, request.Order, response, c.headersFunc); err != nil {
+	if err := core.HttpPost(ctx, c, path, core.EmptyQueryParams, successStatusCodes, request.Order, response, c.headersFunc); err != nil {
 		return nil, err
 	}
 

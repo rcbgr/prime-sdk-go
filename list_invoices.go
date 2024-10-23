@@ -47,22 +47,22 @@ func (c *ClientImpl) ListInvoices(
 
 	var queryParams string
 	if request.BillingYear > 0 {
-		queryParams = appendQueryParam(queryParams, "billing_year", strconv.Itoa(int(request.BillingYear)))
+		queryParams = core.AppendHttpQueryParam(queryParams, "billing_year", strconv.Itoa(int(request.BillingYear)))
 	}
 
 	if request.BillingMonth > 0 {
-		queryParams = appendQueryParam(queryParams, "billing_month", strconv.Itoa(int(request.BillingMonth)))
+		queryParams = core.AppendHttpQueryParam(queryParams, "billing_month", strconv.Itoa(int(request.BillingMonth)))
 	}
 
 	for _, v := range request.States {
-		queryParams = appendQueryParam(queryParams, "states", v)
+		queryParams = core.AppendHttpQueryParam(queryParams, "states", v)
 	}
 
 	queryParams = appendPaginationParams(queryParams, request.Pagination)
 
 	response := &ListInvoicesResponse{Request: request}
 
-	if err := core.Get(ctx, c, path, queryParams, request, response, c.headersFunc); err != nil {
+	if err := core.HttpGet(ctx, c, path, queryParams, successStatusCodes, request, response, c.headersFunc); err != nil {
 		return nil, err
 	}
 

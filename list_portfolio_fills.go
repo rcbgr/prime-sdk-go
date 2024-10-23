@@ -46,15 +46,15 @@ func (c *ClientImpl) ListPortfolioFills(
 
 	queryParams := appendPaginationParams(core.EmptyQueryParams, request.Pagination)
 
-	queryParams = appendQueryParam(queryParams, "start_date", TimeToStr(request.Start))
+	queryParams = core.AppendHttpQueryParam(queryParams, "start_date", TimeToStr(request.Start))
 
 	if !request.End.IsZero() {
-		queryParams = appendQueryParam(queryParams, "end_datae", TimeToStr(request.End))
+		queryParams = core.AppendHttpQueryParam(queryParams, "end_datae", TimeToStr(request.End))
 	}
 
 	response := &ListPortfolioFillsResponse{Request: request}
 
-	if err := core.Get(ctx, c, path, queryParams, request, response, c.headersFunc); err != nil {
+	if err := core.HttpGet(ctx, c, path, queryParams, successStatusCodes, request, response, c.headersFunc); err != nil {
 		return nil, err
 	}
 

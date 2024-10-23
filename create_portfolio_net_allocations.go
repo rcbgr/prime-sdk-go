@@ -50,7 +50,7 @@ func (c *ClientImpl) CreatePortfolioNetAllocations(
 
 	response := &CreatePortfolioNetAllocationsResponse{Request: request}
 
-	if err := core.Post(ctx, c, path, core.EmptyQueryParams, request, response, c.headersFunc); err != nil {
+	if err := core.HttpPost(ctx, c, path, core.EmptyQueryParams, successStatusCodes, request, response, c.headersFunc); err != nil {
 		return nil, err
 	}
 

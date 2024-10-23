@@ -54,12 +54,12 @@ func (c *ClientImpl) ListOnchainWalletBalances(
 	queryParams = appendPaginationParams(queryParams, request.Pagination)
 
 	for _, v := range request.VisiblilityStatuses {
-		queryParams = appendQueryParam(queryParams, "visibility_statuses", v)
+		queryParams = core.AppendHttpQueryParam(queryParams, "visibility_statuses", v)
 	}
 
 	response := &ListOnchainWalletBalancesResponse{Request: request}
 
-	if err := core.Get(ctx, c, path, queryParams, request, response, c.headersFunc); err != nil {
+	if err := core.HttpGet(ctx, c, path, queryParams, successStatusCodes, request, response, c.headersFunc); err != nil {
 		return nil, err
 	}
 

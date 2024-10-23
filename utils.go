@@ -17,24 +17,13 @@
 package prime
 
 import (
-	"fmt"
-	"strings"
 	"time"
 
-	"github.com/shopspring/decimal"
+	"github.com/coinbase-samples/core-go"
 )
 
 func TimeToStr(t time.Time) string {
 	return t.Format("2006-01-02T15:04:05Z")
-}
-
-func strToNum(v string) (amount decimal.Decimal, err error) {
-	amount, err = decimal.NewFromString(v)
-	return
-}
-
-func appendQueryParam(queryParams, key, value string) string {
-	return fmt.Sprintf("%s%s%s=%s", queryParams, queryParamSep(strings.Contains(queryParams, "?")), key, value)
 }
 
 func appendPaginationParams(v string, p *PaginationParams) string {
@@ -44,23 +33,16 @@ func appendPaginationParams(v string, p *PaginationParams) string {
 	}
 
 	if len(p.Cursor) > 0 {
-		v = appendQueryParam(v, "cursor", p.Cursor)
+		v = core.AppendHttpQueryParam(v, "cursor", p.Cursor)
 	}
 
 	if len(p.Limit) > 0 {
-		v = appendQueryParam(v, "limit", p.Limit)
+		v = core.AppendHttpQueryParam(v, "limit", p.Limit)
 	}
 
 	if len(p.SortDirection) > 0 {
-		v = appendQueryParam(v, "sort_direction", p.SortDirection)
+		v = core.AppendHttpQueryParam(v, "sort_direction", p.SortDirection)
 	}
 
 	return v
-}
-
-func queryParamSep(appended bool) string {
-	if appended {
-		return "&"
-	}
-	return "?"
 }

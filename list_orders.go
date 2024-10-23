@@ -54,33 +54,33 @@ func (c *ClientImpl) ListOrders(
 
 	var queryParams string
 
-	queryParams = appendQueryParam(queryParams, "start_date", TimeToStr(request.Start))
+	queryParams = core.AppendHttpQueryParam(queryParams, "start_date", TimeToStr(request.Start))
 
 	if !request.End.IsZero() {
-		queryParams = appendQueryParam(queryParams, "end_date", TimeToStr(request.End))
+		queryParams = core.AppendHttpQueryParam(queryParams, "end_date", TimeToStr(request.End))
 	}
 
 	if len(request.Type) > 0 {
-		queryParams = appendQueryParam(queryParams, "order_type", request.Type)
+		queryParams = core.AppendHttpQueryParam(queryParams, "order_type", request.Type)
 	}
 
 	if len(request.OtherSide) > 0 {
-		queryParams = appendQueryParam(queryParams, "order_side", request.OtherSide)
+		queryParams = core.AppendHttpQueryParam(queryParams, "order_side", request.OtherSide)
 	}
 
 	for _, s := range request.Statuses {
-		queryParams = appendQueryParam(queryParams, "order_statuses", s)
+		queryParams = core.AppendHttpQueryParam(queryParams, "order_statuses", s)
 	}
 
 	for _, p := range request.ProductIds {
-		queryParams = appendQueryParam(queryParams, "product_ids", p)
+		queryParams = core.AppendHttpQueryParam(queryParams, "product_ids", p)
 	}
 
 	queryParams = appendPaginationParams(queryParams, request.Pagination)
 
 	response := &ListOrdersResponse{Request: request}
 
-	if err := core.Get(ctx, c, path, queryParams, request, response, c.headersFunc); err != nil {
+	if err := core.HttpGet(ctx, c, path, queryParams, successStatusCodes, request, response, c.headersFunc); err != nil {
 		return nil, err
 	}
 

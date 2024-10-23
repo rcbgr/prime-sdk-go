@@ -42,7 +42,7 @@ func (c *ClientImpl) GetActivity(
 
 	response := &GetActivityResponse{Request: request}
 
-	if err := core.Get(ctx, c, path, core.EmptyQueryParams, request, response, c.headersFunc); err != nil {
+	if err := core.HttpGet(ctx, c, path, core.EmptyQueryParams, successStatusCodes, request, response, c.headersFunc); err != nil {
 		return nil, err
 	}
 

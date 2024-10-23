@@ -45,11 +45,11 @@ func (c *ClientImpl) ListOpenOrders(
 
 	path := fmt.Sprintf("/portfolios/%s/open_orders", request.PortfolioId)
 
-	queryParams := appendQueryParam(core.EmptyQueryParams, "product_ids", request.ProductId)
+	queryParams := core.AppendHttpQueryParam(core.EmptyQueryParams, "product_ids", request.ProductId)
 
 	response := &ListOpenOrdersResponse{Request: request}
 
-	if err := core.Get(ctx, c, path, queryParams, request, response, c.headersFunc); err != nil {
+	if err := core.HttpGet(ctx, c, path, queryParams, successStatusCodes, request, response, c.headersFunc); err != nil {
 		return nil, err
 	}
 

@@ -46,16 +46,16 @@ func (c *ClientImpl) ListPortfolioBalances(
 
 	var queryParams string
 	if len(request.Type) > 0 {
-		queryParams = appendQueryParam(queryParams, "balance_type", request.Type)
+		queryParams = core.AppendHttpQueryParam(queryParams, "balance_type", request.Type)
 	}
 
 	for _, v := range request.Symbols {
-		queryParams = appendQueryParam(queryParams, "symbols", v)
+		queryParams = core.AppendHttpQueryParam(queryParams, "symbols", v)
 	}
 
 	response := &ListPortfolioBalancesResponse{Request: request}
 
-	if err := core.Get(ctx, c, path, queryParams, request, response, c.headersFunc); err != nil {
+	if err := core.HttpGet(ctx, c, path, queryParams, successStatusCodes, request, response, c.headersFunc); err != nil {
 		return nil, err
 	}
 
