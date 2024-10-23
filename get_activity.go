@@ -33,7 +33,7 @@ type GetActivityResponse struct {
 	Request  *GetActivityRequest
 }
 
-func (c *Client) GetActivity(
+func (c *ClientImpl) GetActivity(
 	ctx context.Context,
 	request *GetActivityRequest,
 ) (*GetActivityResponse, error) {

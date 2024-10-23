@@ -38,7 +38,7 @@ type CreateWalletResponse struct {
 	Request    *CreateWalletRequest `json:"request"`
 }
 
-func (c *Client) CreateWallet(ctx context.Context, request *CreateWalletRequest) (*CreateWalletResponse, error) {
+func (c *ClientImpl) CreateWallet(ctx context.Context, request *CreateWalletRequest) (*CreateWalletResponse, error) {
 
 	path := fmt.Sprintf("/portfolios/%s/wallets", request.PortfolioId)
 

@@ -55,6 +55,22 @@ type WebSocketOrdersMessage struct {
 	Events      []*WebSocketOrdersEvent `json:"events"`
 }
 
+type WebSocketOrdersSubscriptionMessage struct {
+	Channel     string                              `json:"channel"`
+	Timestamp   string                              `json:"timestamp"`
+	SequenceNum int                                 `json:"sequence_num"`
+	Events      []*WebSocketOrdersSubscriptionEvent `json:"events"`
+}
+
+type WebSocketOrdersSubscriptionEvent struct {
+	Subscriptions WebSocketOrdersSubscriptionEventData `json:"subscriptions"`
+}
+
+type WebSocketOrdersSubscriptionEventData struct {
+	// These are portfolio ids subscribed to for orders. Json name is orders
+	PortfolioIds []string `json:"orders"`
+}
+
 type WebSocketOrdersEvent struct {
 	Type   string            `json:"type"`
 	Orders []*WebSocketOrder `json:"orders"`
@@ -71,21 +87,37 @@ type WebSocketOrder struct {
 }
 
 type WebSocketL2DataMessage struct {
-	Channel     string                  `json:"channel"`
-	Timestamp   string                  `json:"timestamp"`
-	SequenceNum int                     `json:"sequence_num"`
-	Events      []*WebSocketL2DataEvent `json:"events"`
+	Channel     string              `json:"channel"`
+	Timestamp   string              `json:"timestamp"`
+	SequenceNum int                 `json:"sequence_num"`
+	Events      []*WebSocketL2Event `json:"events"`
 }
 
-type WebSocketL2DataEvent struct {
-	Type      string                   `json:"type"`
-	ProductId string                   `json:"product_id"`
-	Updates   []*WebSocketL2DataUpdate `json:"updates"`
+type WebSocketL2Event struct {
+	Type      string               `json:"type"`
+	ProductId string               `json:"product_id"`
+	Updates   []*WebSocketL2Update `json:"updates"`
 }
 
-type WebSocketL2DataUpdate struct {
+type WebSocketL2Update struct {
 	Side      string `json:"side"`
 	EventTime string `json:"event_time"`
 	Price     string `json:"px"`
 	Quantity  string `json:"qty"`
+}
+
+type WebSocketL2SubscriptionMessage struct {
+	Channel     string                          `json:"channel"`
+	Timestamp   string                          `json:"timestamp"`
+	SequenceNum int                             `json:"sequence_num"`
+	Events      []*WebSocketL2SubscriptionEvent `json:"events"`
+}
+
+type WebSocketL2SubscriptionEvent struct {
+	Subscriptions WebSocketL2SubscriptionEventData `json:"subscriptions"`
+}
+
+type WebSocketL2SubscriptionEventData struct {
+	// These are product ids subscribed to for l2 data. Json name is l2_data
+	ProductIds []string `json:"l2_data"`
 }

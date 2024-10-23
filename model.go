@@ -53,6 +53,15 @@ type ErrorMessage struct {
 	Value string `json:"message"`
 }
 
+type EntityPaymentMethod struct {
+	Id                string `json:"id"`
+	Symbol            string `json:"symbol"`
+	PaymentMethodType string `json:"payment_method_type"`
+	Name              string `json:"name"`
+	AccountNumber     string `json:"account_number"`
+	BankCode          string `json:"bank_code"`
+}
+
 type Portfolio struct {
 	Id             string `json:"id"`
 	Name           string `json:"name"`
@@ -118,6 +127,12 @@ type Wallet struct {
 	Created time.Time `json:"created_at"`
 }
 
+type AllocationLeg struct {
+	LegId                  string `json:"allocation_leg_id"`
+	DestinationPortfolioId string `json:"destination_portfolio_id"`
+	Amount                 string `json:"amount"`
+}
+
 type AllocationDestination struct {
 	LegId             string `json:"leg_id"`
 	SourcePortfolioId string `json:"portfolio_id"`
@@ -132,6 +147,7 @@ type Allocation struct {
 	Completed     string                   `json:"allocation_completed_at"`
 	UserId        string                   `json:"user_id"`
 	ProductId     string                   `json:"product_id"`
+	Side          string                   `json:"side"`
 	AvgPrice      string                   `json:"avg_price"`
 	BaseQuantity  string                   `json:"base_quantity"`
 	QuoteValue    string                   `json:"quote_value"`

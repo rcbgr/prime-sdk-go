@@ -64,6 +64,6 @@ func orderSubscriptionMsg(credentials *Credentials, productIds []string) ([]byte
 	return subscriptionMsg(credentials, "orders", productIds)
 }
 
-func l2OrderDataSubscriptionMsg(credentials *Credentials, productIds []string) ([]byte, error) {
+func l2OSubscriptionMsg(credentials *Credentials, productIds []string) ([]byte, error) {
 	return subscriptionMsg(credentials, "l2_data", productIds)
 }

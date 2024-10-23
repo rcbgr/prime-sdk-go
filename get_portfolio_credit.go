@@ -32,7 +32,7 @@ type GetPortfolioCreditResponse struct {
 	Request         *GetPortfolioCreditRequest `json:"request"`
 }
 
-func (c *Client) GetPortfolioCredit(
+func (c *ClientImpl) GetPortfolioCredit(
 	ctx context.Context,
 	request *GetPortfolioCreditRequest,
 ) (*GetPortfolioCreditResponse, error) {

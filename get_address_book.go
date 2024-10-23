@@ -36,7 +36,7 @@ type GetAddressBookResponse struct {
 	Pagination *Pagination            `json:"pagination"`
 }
 
-func (c *Client) GetAddressBook(
+func (c *ClientImpl) GetAddressBook(
 	ctx context.Context,
 	request *GetAddressBookRequest,
 ) (*GetAddressBookResponse, error) {

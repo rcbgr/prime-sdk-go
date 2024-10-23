@@ -32,12 +32,6 @@ type CreatePortfolioAllocationsRequest struct {
 	RemainderDestinationPortfolioId string           `json:"remainder_destination_portfolio"`
 }
 
-type AllocationLeg struct {
-	LegId                  string `json:"allocation_leg_id"`
-	DestinationPortfolioId string `json:"destination_portfolio_id"`
-	Amount                 string `json:"amount"`
-}
-
 type CreatePortfolioAllocationsResponse struct {
 	Success       bool                               `json:"success"`
 	AllocationId  string                             `json:"allocation_id"`
@@ -45,12 +39,12 @@ type CreatePortfolioAllocationsResponse struct {
 	Request       *CreatePortfolioAllocationsRequest `json:"request"`
 }
 
-func (c *Client) CreatePortfolioAllocations(
+func (c *ClientImpl) CreatePortfolioAllocations(
 	ctx context.Context,
 	request *CreatePortfolioAllocationsRequest,
 ) (*CreatePortfolioAllocationsResponse, error) {
 
-	path := "/allocations/%s/order"
+	path := "/allocations"
 
 	response := &CreatePortfolioAllocationsResponse{Request: request}
 

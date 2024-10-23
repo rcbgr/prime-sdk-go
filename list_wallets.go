@@ -40,7 +40,7 @@ func (r ListWalletsResponse) HasNext() bool {
 	return r.Pagination != nil && r.Pagination.HasNext
 }
 
-func (c *Client) ListWallets(
+func (c *ClientImpl) ListWallets(
 	ctx context.Context,
 	request *ListWalletsRequest,
 ) (*ListWalletsResponse, error) {

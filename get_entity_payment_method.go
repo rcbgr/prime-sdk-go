@@ -29,16 +29,11 @@ type GetEntityPaymentMethodRequest struct {
 }
 
 type GetEntityPaymentMethodResponse struct {
-	Id                string                         `json:"id"`
-	Symbol            string                         `json:"symbol"`
-	PaymentMethodType string                         `json:"payment_method_type"`
-	Name              string                         `json:"name"`
-	AccountNumber     string                         `json:"account_number"`
-	BankCode          string                         `json:"bank_code"`
-	Request           *GetEntityPaymentMethodRequest `json:"request"`
+	Details *EntityPaymentMethod           `json:"details"`
+	Request *GetEntityPaymentMethodRequest `json:"request"`
 }
 
-func (c *Client) GetEntityPaymentMethod(
+func (c *ClientImpl) GetEntityPaymentMethod(
 	ctx context.Context,
 	request *GetEntityPaymentMethodRequest,
 ) (*GetEntityPaymentMethodResponse, error) {

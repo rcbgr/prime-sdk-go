@@ -35,7 +35,7 @@ type GetWalletDepositInstructionsResponse struct {
 	Request *GetWalletDepositInstructionsRequest
 }
 
-func (c *Client) GetWalletDepositInstructions(
+func (c *ClientImpl) GetWalletDepositInstructions(
 	ctx context.Context,
 	request *GetWalletDepositInstructionsRequest,
 ) (*GetWalletDepositInstructionsResponse, error) {

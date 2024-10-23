@@ -32,7 +32,7 @@ type ListAssetsResponse struct {
 	Request *ListAssetsRequest `json:"request"`
 }
 
-func (c *Client) ListAssets(
+func (c *ClientImpl) ListAssets(
 	ctx context.Context,
 	request *ListAssetsRequest,
 ) (*ListAssetsResponse, error) {

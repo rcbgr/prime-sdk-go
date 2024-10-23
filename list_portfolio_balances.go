@@ -37,7 +37,7 @@ type ListPortfolioBalancesResponse struct {
 	Request               *ListPortfolioBalancesRequest `json:"request"`
 }
 
-func (c *Client) ListPortfolioBalances(
+func (c *ClientImpl) ListPortfolioBalances(
 	ctx context.Context,
 	request *ListPortfolioBalancesRequest,
 ) (*ListPortfolioBalancesResponse, error) {

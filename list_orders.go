@@ -45,7 +45,7 @@ type ListOrdersResponse struct {
 // This API endpoint cannot list open orders, so do not add an OPEN status
 // to the status param.
 // https://docs.cloud.coinbase.com/prime/reference/primerestapi_getorders
-func (c *Client) ListOrders(
+func (c *ClientImpl) ListOrders(
 	ctx context.Context,
 	request *ListOrdersRequest,
 ) (*ListOrdersResponse, error) {

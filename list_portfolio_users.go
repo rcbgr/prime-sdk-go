@@ -34,7 +34,7 @@ type ListPortfolioUsersResponse struct {
 	Pagination *Pagination                `json:"pagination"`
 }
 
-func (c *Client) ListPortfolioUsers(
+func (c *ClientImpl) ListPortfolioUsers(
 	ctx context.Context,
 	request *ListPortfolioUsersRequest,
 ) (*ListPortfolioUsersResponse, error) {

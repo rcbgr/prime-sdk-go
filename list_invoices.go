@@ -38,7 +38,7 @@ type ListInvoicesResponse struct {
 	Pagination *Pagination          `json:"pagination"`
 }
 
-func (c *Client) ListInvoices(
+func (c *ClientImpl) ListInvoices(
 	ctx context.Context,
 	request *ListInvoicesRequest,
 ) (*ListInvoicesResponse, error) {

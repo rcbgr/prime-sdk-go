@@ -38,7 +38,7 @@ type ListOpenOrdersResponse struct {
 // This function will change once the Prime endpoint design is finalized.
 // This will not return more than 1k open orders and pagination is not supported.
 // https://docs.cloud.coinbase.com/prime/reference/primerestapi_getopenorders
-func (c *Client) ListOpenOrders(
+func (c *ClientImpl) ListOpenOrders(
 	ctx context.Context,
 	request *ListOpenOrdersRequest,
 ) (*ListOpenOrdersResponse, error) {

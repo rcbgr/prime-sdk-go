@@ -33,7 +33,7 @@ type GetTransactionResponse struct {
 	Request     *GetTransactionRequest `json:"request"`
 }
 
-func (c *Client) GetTransaction(
+func (c *ClientImpl) GetTransaction(
 	ctx context.Context,
 	request *GetTransactionRequest,
 ) (*GetTransactionResponse, error) {

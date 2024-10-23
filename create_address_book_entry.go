@@ -38,7 +38,7 @@ type CreateAddressBookEntryResponse struct {
 	Request            *CreateAddressBookEntryRequest `json:"request"`
 }
 
-func (c *Client) CreateAddressBookEntry(
+func (c *ClientImpl) CreateAddressBookEntry(
 	ctx context.Context,
 	request *CreateAddressBookEntryRequest,
 ) (*CreateAddressBookEntryResponse, error) {

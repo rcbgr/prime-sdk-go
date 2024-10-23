@@ -35,7 +35,7 @@ type ListOrderFillsResponse struct {
 	Request    *ListOrderFillsRequest `json:"request"`
 }
 
-func (c *Client) ListOrderFills(
+func (c *ClientImpl) ListOrderFills(
 	ctx context.Context,
 	request *ListOrderFillsRequest,
 ) (*ListOrderFillsResponse, error) {
