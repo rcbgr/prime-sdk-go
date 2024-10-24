@@ -16,11 +16,14 @@
 
 package prime
 
-type WebSockeL2Listener func(event *WebSocketOrdersMessage)
+// The WebSocket l2 data callback. This function must return ASAP because
+// it will block receiving additional messages. The best practice is to place the message
+// on an ordered queue and process asynchronously.
+type WebSockeL2Callback func(event *WebSocketOrdersMessage)
 
 func (c *clientImpl) WebSocketL2Subscribe(
 	productIds []string,
-	callback WebSockeL2Listener,
+	callback WebSockeL2Callback,
 ) error {
 
 	return nil

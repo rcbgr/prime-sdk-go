@@ -17,24 +17,36 @@
 package prime
 
 import (
+	"time"
+
 	"github.com/coinbase-samples/core-go"
 )
 
 const defaultWebSocketUrl = "wss://ws-feed.prime.coinbase.com"
 
-func (c *clientImpl) WebSocketConn() *core.WebSocketConnection {
-
-	c.webSocketState.Lock()
-	defer c.webSocketState.Unlock()
-
-	return c.webSocketState.conn
+func (c *clientImpl) SetWebSocketDialerConfig(conf core.DialerConfig) Client {
+	if len(conf.Url) == 0 || conf.Url != c.webSocket.url {
+		conf.Url = c.webSocket.url
+	}
+	c.webSocket.dialerConfig = conf
+	return c
 }
 
 func (c *clientImpl) WebSocketUrl() string {
-	return c.webSocketUrl
+	return c.webSocket.url
 }
 
-func (c *clientImpl) SetWebSocketUrl(u string) Client {
-	c.webSocketUrl = u
+func (c *clientImpl) SetWebSocketUrl(url string) Client {
+	c.webSocket.url = url
+	c.webSocket.dialerConfig.Url = url
 	return c
+}
+
+func (c *clientImpl) SetWebSocketDialTimeout(t time.Duration) Client {
+	c.webSocket.dialTimeout = t
+	return c
+}
+
+func (c *clientImpl) WebSocketDialTimeout() time.Duration {
+	return c.webSocket.dialTimeout
 }

@@ -16,19 +16,22 @@
 
 package prime
 
-type WebSockeHeartbeatListener func(event *WebSocketHeartbeatMessage)
+// The WebSocket heartbeats listener callback. This function must return ASAP because
+// it will block receiving additional messages. The best practice is to place the message
+// on an ordered queue and process asynchronously.
+type webSockeHeartbeatsListener func(event *WebSocketHeartbeatMessage)
 
-func (c *clientImpl) WebSocketHeartbeatSubscribe(
+// Heartbeat channels are opened for product IDs subscribed via the Orders or L2 channels.
+func (c *clientImpl) webSocketHeartbeatsSubscribe(
 	productIds []string,
-	callback WebSockeHeartbeatListener,
+	callback webSockeHeartbeatsListener,
 ) error {
 
 	return nil
 }
 
-// Unsubscribe to the heartbeat channel. Pass in specific product IDs or none to
-// unsubscribe from all.
-func (c *clientImpl) WebSocketHeartbeatUnsubscribe(productIds []string) error {
-
+// This is called internally when there are no Orders or L2 subscriptions for
+// particular product IDs.
+func (c *clientImpl) webSocketHeartbeatsUnsubscribe(productIds []string) error {
 	return nil
 }

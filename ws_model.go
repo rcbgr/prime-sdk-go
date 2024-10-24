@@ -28,6 +28,11 @@ type WebSocketSubscribeMessage struct {
 	ProductIds   []string `json:"product_ids,omitempty"`
 }
 
+type WebSocketMessage struct {
+	Type    string `json:"type"`
+	Channel string `json:"channel"`
+}
+
 type WebSocketErrorMessage struct {
 	Type    string `json:"type"`
 	Message string `json:"message"`

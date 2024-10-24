@@ -17,53 +17,85 @@
 package prime
 
 import (
-	"encoding/json"
+	"context"
+	"sync"
 	"time"
+
+	"github.com/coinbase-samples/core-go"
 )
 
-func subscriptionMsg(credentials *Credentials, channel string, productIds []string) ([]byte, error) {
-	t := time.Now().UTC().Format(time.RFC3339)
+const (
+	webSocketHeartbeats = "heartbeats"
+	webSocketOrders     = "orders"
+	webSocketL2         = "l2_data"
+)
 
-	msg := &WebSocketSubscribeMessage{
-		Type:         "subscribe",
-		Channel:      channel,
-		AccessKey:    credentials.AccessKey,
-		SvcAccountId: credentials.SvcAccountId,
-		Timestamp:    t,
-		Passphrase:   credentials.Passphrase,
-		Signature: signWebSocket(
-			channel,
-			credentials.PortfolioId,
-			credentials.SvcAccountId,
-			t,
-			credentials.AccessKey,
-			credentials.SigningKey,
-			productIds,
-		),
-		PortfolioId: credentials.PortfolioId,
+type webSocket struct {
+	sync.Mutex
+	conn          *core.WebSocketConnection
+	subscriptions []*webSocketSubscription
+	connected     bool
+	dialerConfig  core.DialerConfig
+	url           string
+	dialTimeout   time.Duration
+}
+
+func (s *webSocket) closeHandler(code int, text string) error {
+	s.Lock()
+	defer s.Unlock()
+
+	// TODO: Send a close error message to the listener
+	s.connected = false
+	return nil
+}
+
+func (s *webSocket) subscribe(productIds []string, channel string, msg interface{}) error {
+	if err := s.connect(s.dialTimeout); err != nil {
+		return err
 	}
 
-	if len(productIds) > 0 {
-		msg.ProductIds = productIds
+	// check to see if the product ids are already subscribed
+
+	// ensure the listener is running
+
+	// Send the message
+
+}
+
+// connect creates a new WebSocket connection. If the connection is already
+// open, it does nothing.
+func (s *webSocket) connect(timeout time.Duration) error {
+	s.Lock()
+	defer s.Unlock()
+
+	if s.connected {
+		return nil
 	}
 
-	b, err := json.Marshal(msg)
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	defer cancel()
+
+	conn, err := core.DialWebSocket(ctx, s.dialerConfig)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return b, nil
+	s.conn.SetCloseHandler(s.closeHandler)
 
+	s.conn = conn
+	s.connected = true
+
+	return nil
 }
 
-func heartbeatSubscriptionMsg(credentials *Credentials) ([]byte, error) {
-	return subscriptionMsg(credentials, "heartbeats", nil)
+func newWebSocket(url string) *webSocket {
+	return &webSocket{
+		dialerConfig: core.DefaultDialerConfig(url),
+		dialTimeout:  5 * time.Second,
+	}
 }
 
-func orderSubscriptionMsg(credentials *Credentials, productIds []string) ([]byte, error) {
-	return subscriptionMsg(credentials, "orders", productIds)
-}
-
-func l2OSubscriptionMsg(credentials *Credentials, productIds []string) ([]byte, error) {
-	return subscriptionMsg(credentials, "l2_data", productIds)
+type webSocketSubscription struct {
+	channel    string
+	productIds []string
 }

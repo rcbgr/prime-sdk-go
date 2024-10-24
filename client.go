@@ -44,13 +44,33 @@ type Client interface {
 
 	HttpBaseUrl() string
 	SetBaseUrl(u string) Client
-	WebSocketUrl() string
-	SetWebSocketUrl(u string) Client
-	HttpClient() *http.Client
-	WebSocketConn() *core.WebSocketConnection
 
+	HttpClient() *http.Client
 	SetHeadersFunc(hf core.HttpHeaderFunc) Client
+
 	Credentials() *Credentials
+
+	// ==========================================================================
+	// WebSockets
+	// ==========================================================================
+
+	// SetWebSocketUrl sets the URL for the WebSocket connection. It overrides
+	// anything passed in the DialerConfig if that is set.
+	SetWebSocketUrl(u string) Client
+	WebSocketUrl() string
+
+	SetWebSocketDialTimeout(seconds time.Duration) Client
+	WebSocketDialTimeout() time.Duration
+
+	// SetWebSocketDialerConfig sets the WebSocket dialer config. You must call
+	// SetWebSocketUrl if you to override the default URL.
+	SetWebSocketDialerConfig(c core.DialerConfig) Client
+
+	WebSocketL2Subscribe(productIds []string, callback WebSockeL2Callback) error
+	WebSocketL2Unsubscribe(productIds []string) error
+
+	WebSocketOrdersSubscribe(productIds []string, callback WebSockeOrderCallback) error
+	WebSocketOrdersUnsubscribe(productIds []string) error
 
 	// ==========================================================================
 	// Allocations
@@ -165,12 +185,12 @@ type Client interface {
 }
 
 type clientImpl struct {
-	httpClient     http.Client
-	httpBaseUrl    string
-	webSocketUrl   string
-	headersFunc    core.HttpHeaderFunc
-	credentials    *Credentials
-	webSocketState *webSocketState
+	httpClient  http.Client
+	httpBaseUrl string
+
+	headersFunc core.HttpHeaderFunc
+	credentials *Credentials
+	webSocket   *webSocket
 }
 
 func (c *clientImpl) HttpBaseUrl() string {
@@ -197,12 +217,11 @@ func (c *clientImpl) SetHeadersFunc(hf core.HttpHeaderFunc) Client {
 
 func NewClient(credentials *Credentials, httpClient http.Client) Client {
 	return &clientImpl{
-		httpBaseUrl:    defaultV1ApiBaseUrl,
-		webSocketUrl:   defaultWebSocketUrl,
-		credentials:    credentials,
-		httpClient:     httpClient,
-		headersFunc:    defaultHeadersFunc,
-		webSocketState: newWebSocketState(),
+		httpBaseUrl: defaultV1ApiBaseUrl,
+		credentials: credentials,
+		httpClient:  httpClient,
+		headersFunc: defaultHeadersFunc,
+		webSocket:   newWebSocket(defaultWebSocketUrl),
 	}
 }
 
