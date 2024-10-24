@@ -16,9 +16,6 @@
 
 package prime
 
-type webSocketState struct {
-}
-
 type WebSocketSubscribeMessage struct {
 	Type         string   `json:"type"`
 	Channel      string   `json:"channel"`

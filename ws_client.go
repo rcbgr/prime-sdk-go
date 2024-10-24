@@ -16,64 +16,18 @@
 
 package prime
 
+import (
+	"github.com/coinbase-samples/core-go"
+)
+
 const defaultWebSocketUrl = "wss://ws-feed.prime.coinbase.com"
 
-type WebSockeL2Listener func(event *WebSocketOrdersMessage)
+func (c *clientImpl) WebSocketConn() *core.WebSocketConnection {
 
-type WebSockeOrderListener func(event *WebSocketL2Message)
+	c.webSocketState.Lock()
+	defer c.webSocketState.Unlock()
 
-type WebSockeHeartbeatListener func(event *WebSocketHeartbeatMessage)
-
-type WebSockeErrorListener func(event *WebSocketErrorMessage)
-
-func (c *clientImpl) WebSocketL2Subscribe(
-	productIds []string,
-	callback WebSockeL2Listener,
-) error {
-
-	return nil
-}
-
-// Unsubscribe to the L2 data. Pass in specific product IDs or none to
-// unsubscribe from all.
-func (c *clientImpl) WebSocketL2Unsubscribe(productIds []string) error {
-
-	return nil
-}
-
-func (c *clientImpl) WebSocketOrdersSubscribe(
-	productIds []string,
-	callback WebSockeOrderListener,
-) error {
-
-	return nil
-}
-
-// Unsubscribe to the orders data. Pass in specific product IDs or none to
-// unsubscribe from all.
-func (c *clientImpl) WebSocketOrdersUnsubscribe(productIds []string) error {
-
-	return nil
-}
-
-func (c *clientImpl) WebSocketHeartbeatSubscribe(
-	productIds []string,
-	callback WebSockeHeartbeatListener,
-) error {
-
-	return nil
-}
-
-// Unsubscribe to the heartbeat channel. Pass in specific product IDs or none to
-// unsubscribe from all.
-func (c *clientImpl) WebSocketHeartbeatUnsubscribe(productIds []string) error {
-
-	return nil
-}
-
-func (c *clientImpl) AddErrorListener(callback WebSockeErrorListener) error {
-
-	return nil
+	return c.webSocketState.conn
 }
 
 func (c *clientImpl) WebSocketUrl() string {

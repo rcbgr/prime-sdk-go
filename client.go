@@ -47,6 +47,7 @@ type Client interface {
 	WebSocketUrl() string
 	SetWebSocketUrl(u string) Client
 	HttpClient() *http.Client
+	WebSocketConn() *core.WebSocketConnection
 
 	SetHeadersFunc(hf core.HttpHeaderFunc) Client
 	Credentials() *Credentials
@@ -201,7 +202,7 @@ func NewClient(credentials *Credentials, httpClient http.Client) Client {
 		credentials:    credentials,
 		httpClient:     httpClient,
 		headersFunc:    defaultHeadersFunc,
-		webSocketState: &webSocketState{},
+		webSocketState: newWebSocketState(),
 	}
 }
 
