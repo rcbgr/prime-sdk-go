@@ -43,7 +43,7 @@ type CreateConversionResponse struct {
 	Request             *CreateConversionRequest `json:"request"`
 }
 
-func (c *ClientImpl) CreateConversion(
+func (c *clientImpl) CreateConversion(
 	ctx context.Context,
 	request *CreateConversionRequest,
 ) (*CreateConversionResponse, error) {

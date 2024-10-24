@@ -33,7 +33,7 @@ type GetPortfolioAllocationResponse struct {
 	Request    *GetPortfolioAllocationRequest `json:"request"`
 }
 
-func (c *ClientImpl) GetPortfolioAllocation(
+func (c *clientImpl) GetPortfolioAllocation(
 	ctx context.Context,
 	request *GetPortfolioAllocationRequest,
 ) (*GetPortfolioAllocationResponse, error) {

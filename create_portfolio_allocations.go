@@ -39,7 +39,7 @@ type CreatePortfolioAllocationsResponse struct {
 	Request       *CreatePortfolioAllocationsRequest `json:"request"`
 }
 
-func (c *ClientImpl) CreatePortfolioAllocations(
+func (c *clientImpl) CreatePortfolioAllocations(
 	ctx context.Context,
 	request *CreatePortfolioAllocationsRequest,
 ) (*CreatePortfolioAllocationsResponse, error) {

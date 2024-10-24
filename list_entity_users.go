@@ -34,7 +34,7 @@ type ListEntityUsersResponse struct {
 	Pagination *Pagination             `json:"pagination"`
 }
 
-func (c *ClientImpl) ListEntityUsers(
+func (c *clientImpl) ListEntityUsers(
 	ctx context.Context,
 	request *ListEntityUsersRequest,
 ) (*ListEntityUsersResponse, error) {

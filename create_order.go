@@ -33,7 +33,7 @@ type CreateOrderResponse struct {
 	Request *CreateOrderRequest `json:"request"`
 }
 
-func (c *ClientImpl) CreateOrder(ctx context.Context, request *CreateOrderRequest) (*CreateOrderResponse, error) {
+func (c *clientImpl) CreateOrder(ctx context.Context, request *CreateOrderRequest) (*CreateOrderResponse, error) {
 
 	if request.Order == nil {
 		return nil, errors.New("order not set on request")

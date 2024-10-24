@@ -33,7 +33,7 @@ type GetWalletBalanceResponse struct {
 	Request *GetWalletBalanceRequest
 }
 
-func (c *ClientImpl) GetWalletBalance(
+func (c *clientImpl) GetWalletBalance(
 	ctx context.Context,
 	request *GetWalletBalanceRequest,
 ) (*GetWalletBalanceResponse, error) {

@@ -40,7 +40,7 @@ type ListActivitiesResponse struct {
 	Pagination *Pagination            `json:"pagination"`
 }
 
-func (c *ClientImpl) ListActivities(
+func (c *clientImpl) ListActivities(
 	ctx context.Context,
 	request *ListActivitiesRequest,
 ) (*ListActivitiesResponse, error) {

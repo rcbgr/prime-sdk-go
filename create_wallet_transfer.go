@@ -46,7 +46,7 @@ type CreateWalletTransferResponse struct {
 	Request            *CreateWalletTransferRequest `json:"request"`
 }
 
-func (c *ClientImpl) CreateWalletTransfer(
+func (c *clientImpl) CreateWalletTransfer(
 	ctx context.Context,
 	request *CreateWalletTransferRequest,
 ) (*CreateWalletTransferResponse, error) {

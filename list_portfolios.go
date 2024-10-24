@@ -29,7 +29,7 @@ type ListPortfoliosResponse struct {
 	Request    *ListPortfoliosRequest `json:"request"`
 }
 
-func (c *ClientImpl) ListPortfolios(
+func (c *clientImpl) ListPortfolios(
 	ctx context.Context,
 	request *ListPortfoliosRequest,
 ) (*ListPortfoliosResponse, error) {

@@ -38,7 +38,7 @@ type ListOnchainWalletBalancesResponse struct {
 	Request               *ListOnchainWalletBalancesRequest `json:"request"`
 }
 
-func (c *ClientImpl) ListOnchainWalletBalances(
+func (c *clientImpl) ListOnchainWalletBalances(
 	ctx context.Context,
 	request *ListOnchainWalletBalancesRequest,
 ) (*ListOnchainWalletBalancesResponse, error) {

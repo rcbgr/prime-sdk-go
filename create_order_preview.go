@@ -29,7 +29,7 @@ type CreateOrderPreviewResponse struct {
 	Request *CreateOrderRequest `json:"request"`
 }
 
-func (c *ClientImpl) CreateOrderPreview(
+func (c *clientImpl) CreateOrderPreview(
 	ctx context.Context,
 	request *CreateOrderRequest,
 ) (*CreateOrderPreviewResponse, error) {

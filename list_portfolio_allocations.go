@@ -38,7 +38,7 @@ type ListPortfolioAllocationsResponse struct {
 	Pagination *Pagination                      `json:"pagination"`
 }
 
-func (c *ClientImpl) ListPortfolioAllocations(
+func (c *clientImpl) ListPortfolioAllocations(
 	ctx context.Context,
 	request *ListPortfolioAllocationsRequest,
 ) (*ListPortfolioAllocationsResponse, error) {

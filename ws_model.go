@@ -16,6 +16,9 @@
 
 package prime
 
+type webSocketState struct {
+}
+
 type WebSocketSubscribeMessage struct {
 	Type         string   `json:"type"`
 	Channel      string   `json:"channel"`
@@ -26,6 +29,11 @@ type WebSocketSubscribeMessage struct {
 	Signature    string   `json:"signature"`
 	PortfolioId  string   `json:"portfolio_id,omitempty"`
 	ProductIds   []string `json:"product_ids,omitempty"`
+}
+
+type WebSocketErrorMessage struct {
+	Type    string `json:"type"`
+	Message string `json:"message"`
 }
 
 type WebSocketUnsubscribeMessage struct {
@@ -86,7 +94,7 @@ type WebSocketOrder struct {
 	Status             string `json:"status"`
 }
 
-type WebSocketL2DataMessage struct {
+type WebSocketL2Message struct {
 	Channel     string              `json:"channel"`
 	Timestamp   string              `json:"timestamp"`
 	SequenceNum int                 `json:"sequence_num"`

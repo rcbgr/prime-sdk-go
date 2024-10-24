@@ -33,7 +33,7 @@ type CancelOrderResponse struct {
 	Request *CancelOrderRequest `json:"request"`
 }
 
-func (c *ClientImpl) CancelOrder(ctx context.Context, request *CancelOrderRequest) (*CancelOrderResponse, error) {
+func (c *clientImpl) CancelOrder(ctx context.Context, request *CancelOrderRequest) (*CancelOrderResponse, error) {
 	path := fmt.Sprintf("/portfolios/%s/orders/%s/cancel", request.PortfolioId, request.OrderId)
 
 	response := &CancelOrderResponse{Request: request}

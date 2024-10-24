@@ -33,7 +33,7 @@ type GetEntityPaymentMethodResponse struct {
 	Request *GetEntityPaymentMethodRequest `json:"request"`
 }
 
-func (c *ClientImpl) GetEntityPaymentMethod(
+func (c *clientImpl) GetEntityPaymentMethod(
 	ctx context.Context,
 	request *GetEntityPaymentMethodRequest,
 ) (*GetEntityPaymentMethodResponse, error) {

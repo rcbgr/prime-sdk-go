@@ -33,7 +33,7 @@ type GetOrderResponse struct {
 	Request *GetOrderRequest `json:"request"`
 }
 
-func (c *ClientImpl) GetOrder(
+func (c *clientImpl) GetOrder(
 	ctx context.Context,
 	request *GetOrderRequest,
 ) (*GetOrderResponse, error) {

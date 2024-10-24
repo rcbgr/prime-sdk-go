@@ -30,9 +30,7 @@ import (
 	"github.com/coinbase-samples/core-go"
 )
 
-var defaultV1ApiBaseUrl = "https://api.prime.coinbase.com/v1"
-
-var defaultWebSocketUrl = "wss://ws-feed.prime.coinbase.com"
+const defaultV1ApiBaseUrl = "https://api.prime.coinbase.com/v1"
 
 var defaultHeadersFunc = AddPrimeHeaders
 
@@ -165,57 +163,50 @@ type Client interface {
 	GetWalletDepositInstructions(ctx context.Context, request *GetWalletDepositInstructionsRequest) (*GetWalletDepositInstructionsResponse, error)
 }
 
-type ClientImpl struct {
-	httpClient   http.Client
-	httpBaseUrl  string
-	webSocketUrl string
-	headersFunc  core.HttpHeaderFunc
-	credentials  *Credentials
+type clientImpl struct {
+	httpClient     http.Client
+	httpBaseUrl    string
+	webSocketUrl   string
+	headersFunc    core.HttpHeaderFunc
+	credentials    *Credentials
+	webSocketState *webSocketState
 }
 
-func (c *ClientImpl) HttpBaseUrl() string {
+func (c *clientImpl) HttpBaseUrl() string {
 	return c.httpBaseUrl
 }
 
-func (c *ClientImpl) SetBaseUrl(u string) Client {
+func (c *clientImpl) SetBaseUrl(u string) Client {
 	c.httpBaseUrl = u
 	return c
 }
 
-func (c *ClientImpl) WebSocketUrl() string {
-	return c.webSocketUrl
-}
-
-func (c *ClientImpl) SetWebSocketUrl(u string) Client {
-	c.webSocketUrl = u
-	return c
-}
-
-func (c *ClientImpl) HttpClient() *http.Client {
+func (c *clientImpl) HttpClient() *http.Client {
 	return &c.httpClient
 }
 
-func (c *ClientImpl) Credentials() *Credentials {
+func (c *clientImpl) Credentials() *Credentials {
 	return c.credentials
 }
 
-func (c *ClientImpl) SetHeadersFunc(hf core.HttpHeaderFunc) Client {
+func (c *clientImpl) SetHeadersFunc(hf core.HttpHeaderFunc) Client {
 	c.headersFunc = hf
 	return c
 }
 
 func NewClient(credentials *Credentials, httpClient http.Client) Client {
-	return &ClientImpl{
-		httpBaseUrl:  defaultV1ApiBaseUrl,
-		webSocketUrl: defaultWebSocketUrl,
-		credentials:  credentials,
-		httpClient:   httpClient,
-		headersFunc:  defaultHeadersFunc,
+	return &clientImpl{
+		httpBaseUrl:    defaultV1ApiBaseUrl,
+		webSocketUrl:   defaultWebSocketUrl,
+		credentials:    credentials,
+		httpClient:     httpClient,
+		headersFunc:    defaultHeadersFunc,
+		webSocketState: &webSocketState{},
 	}
 }
 
 func AddPrimeHeaders(req *http.Request, path string, body []byte, client core.Client, t time.Time) {
-	c := client.(*ClientImpl)
+	c := client.(*clientImpl)
 	timestamp := strconv.FormatInt(t.Unix(), 10)
 	signature := sign(req.Method, path, timestamp, c.Credentials().SigningKey, string(body))
 	req.Header.Add("Accept", "application/json")

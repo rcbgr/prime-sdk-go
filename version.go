@@ -16,4 +16,4 @@
 
 package prime
 
-const sdkVersion = "0.1.4"
+const sdkVersion = "1.0.0"

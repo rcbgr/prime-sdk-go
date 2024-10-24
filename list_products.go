@@ -34,7 +34,7 @@ type ListProductsResponse struct {
 	Request    *ListProductsRequest `json:"request"`
 }
 
-func (c *ClientImpl) ListProducts(
+func (c *clientImpl) ListProducts(
 	ctx context.Context,
 	request *ListProductsRequest,
 ) (*ListProductsResponse, error) {
