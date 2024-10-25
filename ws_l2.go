@@ -16,22 +16,14 @@
 
 package prime
 
-// The WebSocket l2 data callback. This function must return ASAP because
-// it will block receiving additional messages. The best practice is to place the message
-// on an ordered queue and process asynchronously.
-type WebSockeL2Callback func(event *WebSocketOrdersMessage)
-
-func (c *clientImpl) WebSocketL2Subscribe(
-	productIds []string,
-	callback WebSockeL2Callback,
-) error {
+// Subscribe to the WebSockets l2 data channel.
+func (c *clientImpl) WebSocketL2Subscribe() error {
 
 	return nil
 }
 
-// Unsubscribe to the L2 data. Pass in specific product IDs or none to
-// unsubscribe from all.
-func (c *clientImpl) WebSocketL2Unsubscribe(productIds []string) error {
+// Unsubscribe to the L2 data.
+func (c *clientImpl) WebSocketL2Unsubscribe() error {
 
 	return nil
 }
