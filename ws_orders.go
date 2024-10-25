@@ -16,22 +16,15 @@
 
 package prime
 
-// The WebSocket orders listener callback. This function must return ASAP because
-// it will block receiving additional messages. The best practice is to place the message
-// on an ordered queue and process asynchronously.
-type WebSockeOrderCallback func(event *WebSocketL2Message)
-
-func (c *clientImpl) WebSocketOrdersSubscribe(
-	productIds []string,
-	callback WebSockeOrderCallback,
-) error {
+// Subscribe to the WebSockets orders channel. Only one callback function can be registered.
+func (c *clientImpl) WebSocketOrdersSubscribe() error {
+	c.webSocket.setOrdersCallback(callback)
 
 	return nil
 }
 
-// Unsubscribe to the orders data. Pass in specific product IDs or none to
-// unsubscribe from all.
-func (c *clientImpl) WebSocketOrdersUnsubscribe(productIds []string) error {
+// Unsubscribe to the orders data.
+func (c *clientImpl) WebSocketOrdersUnsubscribe() error {
 
 	return nil
 }
