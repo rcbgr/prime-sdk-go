@@ -15,10 +15,3 @@
  */
 
 package prime
-
-type WebSockeErrorListener func(event *WebSocketErrorMessage)
-
-func (c *clientImpl) AddErrorListener(callback WebSockeErrorListener) error {
-
-	return nil
-}
