@@ -46,7 +46,6 @@ func (c *clientImpl) ListOnchainWalletBalances(
 	path := fmt.Sprintf(
 		"/portfolios/$s/wallets/%s/web3_balances",
 		request.PortfolioId,
-		request.WalletId,
 	)
 
 	var queryParams string

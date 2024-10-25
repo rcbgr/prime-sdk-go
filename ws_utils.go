@@ -56,8 +56,8 @@ func subscriptionMsg(credentials *Credentials, channel string, productIds []stri
 
 }
 
-func heartbeatSubscriptionMsg(credentials *Credentials) ([]byte, error) {
-	return subscriptionMsg(credentials, "heartbeats", nil)
+func heartbeatSubscriptionMsg(credentials *Credentials, productIds []string) ([]byte, error) {
+	return subscriptionMsg(credentials, "heartbeats", productIds)
 }
 
 func orderSubscriptionMsg(credentials *Credentials, productIds []string) ([]byte, error) {

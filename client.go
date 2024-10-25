@@ -66,11 +66,19 @@ type Client interface {
 	// SetWebSocketUrl if you to override the default URL.
 	SetWebSocketDialerConfig(c core.DialerConfig) Client
 
-	WebSocketL2Subscribe(productIds []string, callback WebSockeL2Callback) error
-	WebSocketL2Unsubscribe(productIds []string) error
+	// SetErrorCallback registers a callback when WebSocket errors or server errors are received.
+	SetErrorCallback(callback WebSockeErrorCallback) Client
 
-	WebSocketOrdersSubscribe(productIds []string, callback WebSockeOrderCallback) error
-	WebSocketOrdersUnsubscribe(productIds []string) error
+	SetWebSockeL2Callback(callback WebSockeL2Callback) Client
+	SetWebSockeOrderCallback(callback WebSockeOrderCallback) Client
+
+	// SetWebSocketProductIds defines the supported product IDs for WebSockets. This must
+	// be set before subscribing to any WebSocket channels. This cannot be changed once the
+	// a subscription has been created.
+	SetWebSocketProductIds(productIds []string) Client
+
+	WebSocketSubscribe() error
+	WebSocketUnsubscribe() error
 
 	// ==========================================================================
 	// Allocations

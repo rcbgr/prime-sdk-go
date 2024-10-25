@@ -32,12 +32,17 @@ const (
 
 type webSocket struct {
 	sync.Mutex
-	conn          *core.WebSocketConnection
-	subscriptions []*webSocketSubscription
-	connected     bool
-	dialerConfig  core.DialerConfig
-	url           string
-	dialTimeout   time.Duration
+	conn         *core.WebSocketConnection
+	connected    bool
+	dialerConfig core.DialerConfig
+	url          string
+	dialTimeout  time.Duration
+
+	productIds        []string
+	l2Callback        WebSockeL2Callback
+	orderCallback     WebSockeOrderCallback
+	heartbeatCallback webSockeHeartbeatCallback
+	errorCallback     WebSockeErrorCallback
 }
 
 func (s *webSocket) closeHandler(code int, text string) error {
@@ -49,17 +54,17 @@ func (s *webSocket) closeHandler(code int, text string) error {
 	return nil
 }
 
-func (s *webSocket) subscribe(productIds []string, channel string, msg interface{}) error {
+func (s *webSocket) subscribe() error {
+	// Ensure the connection
 	if err := s.connect(s.dialTimeout); err != nil {
 		return err
 	}
 
-	// check to see if the product ids are already subscribed
+	// Ensure the listener is running
 
-	// ensure the listener is running
+	// Send the subscribe messages
 
-	// Send the message
-
+	return nil
 }
 
 // connect creates a new WebSocket connection. If the connection is already
@@ -93,9 +98,4 @@ func newWebSocket(url string) *webSocket {
 		dialerConfig: core.DefaultDialerConfig(url),
 		dialTimeout:  5 * time.Second,
 	}
-}
-
-type webSocketSubscription struct {
-	channel    string
-	productIds []string
 }

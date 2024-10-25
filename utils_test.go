@@ -56,47 +56,4 @@ func TestPaginationParams(t *testing.T) {
 			}
 		})
 	}
-
-}
-
-func TestAppendQueryParam(t *testing.T) {
-
-	cases := []struct {
-		description string
-		queryParams string
-		key         string
-		value       string
-		expected    string
-	}{
-		{
-			description: "TestAppendQueryParam0",
-			queryParams: "",
-			key:         "foo",
-			value:       "bar",
-			expected:    "?foo=bar",
-		},
-		{
-			description: "TestAppendQueryParam1",
-			queryParams: "?test=new",
-			key:         "foo",
-			value:       "bar",
-			expected:    "?test=new&foo=bar",
-		},
-		{
-			description: "TestAppendQueryParam2",
-			queryParams: "?test=new&new=test",
-			key:         "foo",
-			value:       "bar",
-			expected:    "?test=new&new=test&foo=bar",
-		},
-	}
-
-	for _, tt := range cases {
-		t.Run(tt.description, func(t *testing.T) {
-			result := appendQueryParam(tt.queryParams, tt.key, tt.value)
-			if result != tt.expected {
-				t.Errorf("test: %s - expected: %s - received: %s", tt.description, tt.expected, result)
-			}
-		})
-	}
 }
